@@ -16,24 +16,26 @@ class _ThreadingState extends State<Threading> {
       appBar: AppBar(
         title: const Text('Threading'),
       ),
-      body: Column(
-        children: [
-          const Text('Threading'),
-          const CircularProgressIndicator(),
-          const SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              var revicePort = ReceivePort();
-              Isolate.spawn(computeHeavyTask, revicePort.sendPort);
-              revicePort.listen((message) {
-                print(message);
-              });
-            },
-            child: const Text('Start'),
-          )
-        ],
+      body: Center(
+        child: Column(
+          children: [
+            const Text('Threading'),
+            const CircularProgressIndicator(),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                var revicePort = ReceivePort();
+                Isolate.spawn(computeHeavyTask, revicePort.sendPort);
+                revicePort.listen((message) {
+                  print(message);
+                });
+              },
+              child: const Text('Start'),
+            )
+          ],
+        ),
       ),
     );
   }
