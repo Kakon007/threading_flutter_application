@@ -2,6 +2,8 @@ import 'dart:isolate';
 
 import 'package:flutter/material.dart';
 
+var counterValue;
+
 class Threading extends StatefulWidget {
   Threading({Key? key}) : super(key: key);
 
@@ -19,7 +21,7 @@ class _ThreadingState extends State<Threading> {
       body: Center(
         child: Column(
           children: [
-            const Text('Threading'),
+            Text('Counter Value: $counterValue'),
             const CircularProgressIndicator(),
             const SizedBox(
               height: 20,
@@ -29,7 +31,10 @@ class _ThreadingState extends State<Threading> {
                 var revicePort = ReceivePort();
                 Isolate.spawn(computeHeavyTask, revicePort.sendPort);
                 revicePort.listen((message) {
-                  print(message);
+                  setState(() {
+                    counterValue = message;
+                    print('Counter Value: $message');
+                  });
                 });
               },
               child: const Text('Start'),
@@ -43,7 +48,7 @@ class _ThreadingState extends State<Threading> {
 
 computeHeavyTask(SendPort sendPort) {
   int sum = 0;
-  for (int i = 0; i < 1000000000; i++) {
+  for (int i = 0; i < 100000; i++) {
     sum += i;
   }
   sendPort.send(sum);
