@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:threading_flutter_application/threading_screen.dart';
+import 'package:threading_flutter_application/isolate.dart';
 
 void main() {
   runApp(const MyApp());
